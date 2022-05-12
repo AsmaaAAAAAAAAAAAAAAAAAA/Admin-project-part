@@ -1,0 +1,40 @@
+
+<ng-container >
+  <br>
+  <h1><b>Add/Edit New Product</b></h1>
+ <form #prdFrm="ngForm" (ngSubmit)="saveProduct()">
+  <div class="mb-3">
+    <label for="pName" class="form-label">Product Name</label>
+    <input #prdName="ngModel" type="text" [(ngModel)]="newPrd.name"
+      class="form-control" [class.is-valid]="prdName.valid" [class.is-invalid]="prdName.invalid && prdName.touched" name="pName" id="PName" placeholder="" required minlength="3">
+    <div [hidden]="prdName.valid || prdName.untouched">
+      <small *ngIf="prdName.errors?.['required']" id="helpId" class="form-text text-muted d-block">Product Name is Required</small>
+      <small *ngIf="prdName.errors?.['minlength']" id="helpId2" class="form-text text-muted d-block">Product Name must be 3 letters at least</small>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="pPrice" class="form-label">Product Price</label>
+    <input type="number" [(ngModel)]="newPrd.price"
+      class="form-control" name="pPrice" id="pPrice" placeholder="" required min="1">
+    <small id="helpId" class="form-text text-muted"></small>
+  </div>
+  <div class="mb-3">
+    <label for="pQuant" class="form-label">Product Quantity</label>
+    <input type="number" [(ngModel)]="newPrd.quantity"
+      class="form-control" name="pQuant" id="pQuant" placeholder="" required min="1">
+    <small id="helpId" class="form-text text-muted"></small>
+  </div>
+  <div class="mb-3">
+    <label for="CatSel" class="form-label">Select Category</label>
+    <select class="form-control" [(ngModel)]="newPrd.catID"
+      name="cat" id="CatSel" title="catgory" required>
+      <option *ngFor="let cat of catList" [value]="cat.id">{{cat.name}}</option>
+    </select>
+  </div>
+  <app-upload (onUploadFinished)="uploadFinished($event)"></app-upload>
+  <button [disabled]="prdFrm.invalid" type="submit" class="btn btn-success" >Submit</button>
+</form>
+</ng-container>
+<br><br><br>
+
+

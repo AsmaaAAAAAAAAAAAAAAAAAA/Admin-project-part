@@ -1,0 +1,42 @@
+<form class="m-5" [formGroup]="userRegisterFormGroup" (ngSubmit)="register()">
+  <div class="mb-3">
+    <label for="fName" class="form-label">Full Name</label>
+    <input type="text" formControlName="userName" class="form-control" id="fName" placeholder="" name="fName"
+      [class.is-valid]="userName.valid" [class.is-invalid]="userName.invalid && userName.touched">
+    <div [hidden]="userName.valid || userName.untouched">
+      <small *ngIf="userName.errors?.['required']" id="helpId" class="form-text text-muted d-block">User Name is
+        Required</small>
+      <small *ngIf="userName.errors?.['minlength']" id="helpId2" class="form-text text-muted d-block">User Name must be
+        5
+        letters at least</small>
+    </div>
+  </div>
+  <div class="form-outline mb-1">
+    <label for="uEmail" class="form-label">Email</label>
+    <input type="email" class="form-control" formControlName="email" id="uEmail" placeholder="" name="uEmail" required>
+
+  </div>
+  <div class="mb-3">
+    <label for="upassword" class="form-label">Password</label>
+    <input type="password" class="form-control" id="upassword" placeholder="" formControlName="password"
+      name="upassword" required>
+    <div [hidden]="password.valid || password.untouched">
+      <small *ngIf="password.errors?.['required']" id="helpId" class="form-text text-muted d-block">User Name is
+        Required</small>
+      <small *ngIf="password.errors?.['pattern']" id="helpId2" class="form-text text-muted d-block">Password should have
+        at least one: Capital letter, small letter, number, special character and minlength:6</small>
+
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="confirmpass" class="form-label">Confirm Password</label>
+    <input type="password" formControlName="ConfirmPassword" class="form-control" id="confirmpass" placeholder=""
+      name="confirmpass" required>
+
+  </div>
+  <div *ngIf="userRegisterFormGroup.errors?.['passwordMismatch'] && (ConfirmPassword.touched || password.touched)"
+    class="cross-validation-error-message alert alert-danger">
+    Password and confirm password don't match.
+  </div>
+  <button [disabled]="userRegisterFormGroup.invalid" type="submit" class="btn btn-success">Register</button>
+</form>
